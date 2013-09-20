@@ -53,15 +53,20 @@ public class Fraction {
 	    throws Exception {
 	if (this.denominator.signum() == 0) {
 	    throw new Exception("Zero is an invalid denominator");
-	} // if
+	}
 	this.numerator = numerator;
 	this.denominator = denominator;
 	this.cleanup();
     } // Fraction(BigInteger, BigInteger)
 
-    public Fraction(int numerator, int denominator) {
+    public Fraction(int numerator, int denominator) throws Exception {
+	if (this.denominator.signum() == 0) {
+	    throw new Exception("Zero is an invalid denominator");
+	}
 	this.numerator = BigInteger.valueOf(numerator);
 	this.denominator = BigInteger.valueOf(denominator);
+	this.cleanup();
+
     } // Fraction(int, int)
 
     // +-------------------------+--------------------------------------
@@ -111,7 +116,7 @@ public class Fraction {
     /**
      * Add another fraction to this fraction.
      */
-    public Fraction add(Fraction addend) {
+    public Fraction add(Fraction addend) throws Exception {
 	BigInteger resultNumerator;
 	BigInteger resultDenominator;
 
@@ -123,21 +128,84 @@ public class Fraction {
 	resultNumerator = (this.numerator.multiply(addend.denominator))
 		.add(addend.numerator.multiply(this.denominator));
 
-	this.simplify();
-
 	// Return the computed value
-	try {
-	    return new Fraction(resultNumerator, resultDenominator);
-	} catch (Exception e) {
-	    return this;
-	}
+	Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+	resultFrac.simplify();
+	return resultFrac;
+
     } // add(Fraction)
+
+    public Fraction subtract(Fraction subtractor) throws Exception {
+	subtractor.numerator = subtractor.numerator.multiply(NEGATIVE_ONE);
+	return this.add(subtractor);
+    }
 
     /**
      * Approximate this fraction as a double.
      */
-    public double doubleValue() {
+    public double toDouble() {
 	return this.numerator.doubleValue() / this.denominator.doubleValue();
-    } // doubleValue()
+    } // toDouble()
+
+    /**
+     * Multiply another fraction by this fraction
+     */
+    public Fraction multiplyBy(Fraction multiplier) {
+	BigInteger resultNumerator;
+	BigInteger resultDenominator;
+
+	resultNumerator = this.numerator.multiply(multiplier.numerator);
+	resultDenominator = this.denominator.multiply(multiplier.denominator);
+
+	try {
+	    Fraction resultFrac = new Fraction(resultNumerator,
+		    resultDenominator);
+	    resultFrac.simplify();
+	    return resultFrac;
+	} catch (Exception e1) {
+	    // UHHHHHH
+	    return this;
+	}
+
+    }
+
+    /**
+     * Divide this fraction by another fraction
+     * 
+     * @param divisor
+     * @return
+     * @throws Exception
+     */
+
+    public Fraction divideBy(Fraction divisor) throws Exception {
+	BigInteger resultNumerator;
+	BigInteger resultDenominator;
+
+	resultNumerator = this.numerator.multiply(divisor.denominator);
+	resultDenominator = this.denominator.multiply(divisor.numerator);
+
+	Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+	resultFrac.simplify();
+	return resultFrac;
+    }
+
+    /**
+     * Find the fraction to the power of an integer
+     * 
+     * @param exponent
+     * @return
+     */
+
+    public Fraction powerTo(int exponent) throws Exception {
+	BigInteger resultNumerator;
+	BigInteger resultDenominator;
+
+	resultNumerator = this.numerator.pow(exponent);
+	resultDenominator = this.denominator.pow(exponent);
+
+	Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+	resultFrac.simplify();
+	return resultFrac;
+    }
 
 } // class Fraction
