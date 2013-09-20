@@ -51,7 +51,7 @@ public class Fraction {
      */
     public Fraction(BigInteger numerator, BigInteger denominator)
 	    throws Exception {
-	if (this.denominator.signum() == 0) {
+	if (denominator.intValue() == 0) {
 	    throw new Exception("Zero is an invalid denominator");
 	}
 	this.numerator = numerator;
@@ -60,7 +60,7 @@ public class Fraction {
     } // Fraction(BigInteger, BigInteger)
 
     public Fraction(int numerator, int denominator) throws Exception {
-	if (this.denominator.signum() == 0) {
+	if (denominator == 0) {
 	    throw new Exception("Zero is an invalid denominator");
 	}
 	this.numerator = BigInteger.valueOf(numerator);

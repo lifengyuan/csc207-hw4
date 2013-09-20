@@ -29,13 +29,23 @@ public class FractionTest {
     }
 
     @Test
-    public void testAdd() {
-	fail("Not yet implemented");
+    public void testAdd() throws Exception {
+	System.out.println(new Fraction(2,3));
+	// fail("Not yet implemented");
     }
 
     @Test
     public void testDoubleValue() {
-	fail("Not yet implemented");
+	// fail("Not yet implemented");
     }
 
-}
+    @Test
+    public void testZeroDenominator() {
+	try {
+	    	new Fraction(1,0);
+	   	fail("Zero denominator did not throw an exception");
+	} catch (Exception e) {
+	
+	} // try/catch
+    } // testZeroDenominator
+} // FractionTest
