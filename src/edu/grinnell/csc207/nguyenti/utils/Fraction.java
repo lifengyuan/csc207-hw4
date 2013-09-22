@@ -80,6 +80,7 @@ public class Fraction {
 	this.denominator = BigInteger.valueOf(1);
     } // Fraction(int)
 
+    //throw exception if input is not a fraction
     public Fraction(String fract) throws Exception {
 	String[] parts = fract.split("/");
 	if (parts.length > 2) {
@@ -109,10 +110,16 @@ public class Fraction {
 
     public Fraction(double num) {
 	double mantissa = (num % 1);
+	if (mantissa == 0) {
+	    this.numerator = BigInteger.valueOf((long) num);
+	    this.denominator = BigInteger.valueOf(1);
+	}
+	else {
 	long multiplier = (long) (1 / mantissa);
 	long nearInt = Math.round(multiplier * num);
 	this.numerator = BigInteger.valueOf(nearInt);
 	this.denominator = BigInteger.valueOf(multiplier);
+	}
     }
 
     // +-------------------------+--------------------------------------
@@ -353,7 +360,6 @@ public class Fraction {
     }
 
     public static void main(String[] args) {
-	int n = -8 % 6;
-	System.out.print(n);
+	System.out.print(new Fraction(6.0).toString());
     }
 } // class Fraction
