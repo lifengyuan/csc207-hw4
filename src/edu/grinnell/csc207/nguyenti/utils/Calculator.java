@@ -26,8 +26,8 @@ public class Calculator {
 	Fraction total;
 	char c = vals[0].charAt(0);
 	Fraction left;
+	int j = 0;
 	Fraction right;
-	boolean operation = false;
 	if (!Character.isDigit(c) && c != 'r') {
 	    throw new Exception(vals[0]
 		    + " is not a digit or a storage element");
@@ -43,27 +43,32 @@ public class Calculator {
 		    revised = revised + vals[i] + " "; // Worth checking
 		}
 		r[vals[0].charAt(1)] = evaluate(revised);
+		return r[vals[0].charAt(1)];
 	    }
 	} else {
-	    for (int j = 0; j < len; j++) {
-		if(vals[j].length() == 1) {
-		    switch (vals[j].charAt(0)) {
-		    case '+':
-		    case '-':
-		    case '*':
-		    case '/':
-		    case '^': 
-			operation = true;
-		    break;	
-		    default:  
-			operation = false;
-		    break;
-		    }
+	    left = new Fraction(vals[0]);
+	    
+	    while(j < len) {
+		j++;
+		if (vals[j - 1].length() != 1) {
+		    throw new Exception(vals[j] + " is not a valid operation");
 		}
-		if(!operation) {
-		    left = Fraction(vals[j]);
+		
+		switch (vals[j - 1].charAt(0)) {
+		case '+': left = left.add(BigInteger.valueOf(right));
+		break;
+		case '-': result = result.subtract(BigInteger.valueOf(right));
+		break;
+		case '*': result = result.multiply(BigInteger.valueOf(right));
+		break;
+		case '/': result = result.divide(BigInteger.valueOf(right));
+		break;
+		case '^': result = result.pow(right);
+		break;
+		default:  
+		break;
 		}
-		c = vals[j].charAt[0]
+		
 	    }
 	}
 	return null;
