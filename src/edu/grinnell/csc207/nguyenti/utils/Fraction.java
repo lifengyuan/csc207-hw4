@@ -80,13 +80,23 @@ public class Fraction {
 		this.denominator = BigInteger.valueOf(1);
 	} // Fraction(int)
 
+	/* QUESTIONS HERE */
 	public Fraction(String fract) throws Exception {
 		String[] parts = fract.split("/");
-		if (Long.parseLong(parts[1]) == 0) {
+		if (parts.length > 2) {
+			throw new Exception("Too many values");
+		} else if ((Long.parseLong(parts[1]) == 0) && (parts.length != 1)) {
+			// Will this also throw an error if the string is not a number?
 			throw new Exception("Zero is an invalid denominator");
 		}
+
+		/* What is the parseLong for? */
 		this.numerator = BigInteger.valueOf(Long.parseLong(parts[0]));
-		this.denominator = BigInteger.valueOf(Long.parseLong(parts[1]));
+		if (parts.length == 1) {
+			this.denominator = BigInteger.valueOf(1);
+		} else {
+			this.denominator = BigInteger.valueOf(Long.parseLong(parts[1]));
+		}
 		this.cleanup();
 	} // Fraction(String)
 
@@ -123,7 +133,7 @@ public class Fraction {
 		return this.numerator.hashCode() * this.denominator.hashCode();
 	}
 
-	public Fraction clone() throws Exception {
+	public Fraction clone() throws Exception { // This is having an issue
 		return new Fraction(this.numerator, this.denominator);
 	}
 
@@ -131,8 +141,14 @@ public class Fraction {
 		return this.numerator.multiply(other.denominator).compareTo(
 				this.denominator.multiply(other.numerator));
 	}
-	public boolean equals(Object other) {
-		
+
+	public boolean equals(Fraction other) {
+		if (this.numerator.equals(other.numerator)
+				&& this.denominator.equals(other.denominator)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// +-----------------+----------------------------------------------
