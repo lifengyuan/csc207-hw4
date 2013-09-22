@@ -1,5 +1,14 @@
 package edu.grinnell.csc207.nguyenti.utils;
 
+
+/**
+ * Calculator implementation
+ * 
+ * @author Tiffany Nguyen
+ * @author Earnest Wheeler
+ * @author Matt Dole
+ */
+
 public class Calculator {
 
     String[] r = new String[9];
