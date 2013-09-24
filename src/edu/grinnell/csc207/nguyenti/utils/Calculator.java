@@ -17,6 +17,7 @@ import java.math.BigInteger;
  *         https://github.com/wheelere/csc207-hw3/blob/master/
  *         csc207-hw3/src/edu/grinnell/csc207/wheelere/hw3/ Calculator.java
  * 
+ *         I sat next to Daniel Goldstein while writing evaluate ~
  * 
  */
 
@@ -28,12 +29,9 @@ public class Calculator {
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
-	// HAVENT DEALT WITH "r0 =" case
-	// If we want make error index work properly, we need to have a set count
-	// that will survive recursion
 	public Fraction evaluate(String expression) throws Exception {
 		String[] vals = expression.split(" ");
-		String revised = "";
+		String revised = ""; //
 		int len = vals.length;
 		char c = vals[0].charAt(0);
 		Fraction right;
@@ -45,15 +43,16 @@ public class Calculator {
 			if (c != 'r') {
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a storage element");
-			} else if (vals[0].length() > 2
+			} else if (vals[0].length() != 2
 					&& !Character.isDigit(vals[0].charAt(1))) {
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a proper storage element");
 			} else {
 				for (int i = 2; i < len; i++) {
-					revised = revised + vals[i] + " "; // Worth checking
+					revised = revised + vals[i] + " ";
 				}
-				BadIndex += 2;
+				
+				BadIndex += 5;
 				r[vals[0].charAt(1)] = evaluate(revised);
 				return r[vals[0].charAt(1)];
 			}
@@ -66,16 +65,24 @@ public class Calculator {
 					throw new Exception("Location: " + BadIndex + "; "
 							+ vals[0] + " is not a proper storage element");
 				}
-
 			}
 			result = new Fraction(vals[0]);
-			for (int j = 2; j < len; j += 2) {
-
+			BadIndex = BadIndex + (vals[0].length());
+			int j;
+			for (j = 2; j < len; j += 2) {
+				BadIndex += 3;
 				if (vals[j - 1].length() != 1) {
-					throw new Exception(vals[j] + " is not a valid operation");
+					throw new Exception("Location: " + (BadIndex - 2) + "; "
+							+ vals[j - 1] + " is not a valid operation");
 				}
 				if (vals[j].charAt(0) == 'r') {
-
+					if (Character.isDigit(vals[0].charAt(1))
+							&& vals[0].length() == 2) {
+						result = r[vals[0].charAt(1)];
+					} else {
+						throw new Exception("Location: " + BadIndex + "; "
+								+ vals[0] + " is not a proper storage element");
+					}
 				}
 				right = new Fraction(vals[j]);
 				switch (vals[j - 1].charAt(0)) {
@@ -95,14 +102,20 @@ public class Calculator {
 					if (right.wholePart() == right.numerator()) {
 						result = result.pow(Integer.parseInt(vals[j]));
 					} else {
-						throw new Exception("Term beginning at index " + j
-								+ " must be an integer value");
+						throw new Exception("Location: " + BadIndex + "; "
+								+ vals[j] + " must be an integer value");
 					}
 					break;
 				default:
-					throw new Exception(vals[j] + " is not a valid operation");
+					throw new Exception("Location: " + (BadIndex - 2) + "; "
+							+ vals[j] + " is not a valid Fraction");
 				}
+				BadIndex += vals[j].length();
 			} // for loop calculates everything and condenses it into result
+			if (len != j) {
+				throw new Exception("Location: " + (BadIndex + 2) + "; "
+						+ vals[len] + " is not a valid term");
+			}
 			return result;
 		}
 	}
