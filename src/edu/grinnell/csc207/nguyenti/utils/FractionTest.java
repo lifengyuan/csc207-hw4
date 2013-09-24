@@ -253,6 +253,7 @@ public class FractionTest {
 				0,
 				new Fraction(2).multiplyBy(new Fraction(3)).compareTo(
 						new Fraction(6)));
+		assertEquals()
 	}
 
 	@Test
@@ -284,12 +285,14 @@ public class FractionTest {
 
 	@Test
 	public void testNumerator() throws Exception {
-		assertEquals("basic fraction", BigInteger.valueOf(2), new Fraction(2, 15).numerator());
+		assertEquals("basic fraction", BigInteger.valueOf(2), new Fraction(2,
+				15).numerator());
 	}
 
 	@Test
 	public void testDenominator() throws Exception {
-		assertEquals("basic fraction", BigInteger.valueOf(45), new Fraction(2, 45).denominator());
+		assertEquals("basic fraction", BigInteger.valueOf(45), new Fraction(2,
+				45).denominator());
 	}
 
 	@Test

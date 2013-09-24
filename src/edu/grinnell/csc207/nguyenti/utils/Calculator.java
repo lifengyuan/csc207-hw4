@@ -54,13 +54,13 @@ public class Calculator {
 		if (!Character.isDigit(c) && c != 'r') {
 			throw new Exception("Location: " + BadIndex + "; " + vals[0]
 					+ " is not a digit or a storage element");
-		} else if (len > 1 && vals[1] == "=") {
+		} else if (len > 1 && vals[1].equals("=")) {
 			// if the first operation is '=', we should be assigning rN a value
 			if (c != 'r') {
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a storage element");
 			} else if (vals[0].length() != 2
-					&& !Character.isDigit(vals[0].charAt(1))) {
+					|| !Character.isDigit(vals[0].charAt(1))) {
 				// if we have rNN, or r[non-digit], throw this exception
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a proper storage element");
@@ -71,8 +71,8 @@ public class Calculator {
 				}
 				BadIndex += 5; // set the index to be after 'rN = '
 				// recurse with revised, and set rN to be evaluate(revised)
-				r[vals[0].charAt(1)] = evaluate(revised);
-				return r[vals[0].charAt(1)];
+				r[Character.getNumericValue(vals[0].charAt(1))] = evaluate(revised);
+				return r[Character.getNumericValue(vals[0].charAt(1))];
 			}
 		} else {
 			/**
@@ -82,10 +82,10 @@ public class Calculator {
 			// Check for the first term being rN
 			if (c == 'r') {
 				// ensure it's a valid storage element
-				if (Character.isDigit(vals[0].charAt(1))
-						&& vals[0].length() == 2) {
+				if (vals[0].length() == 2
+						&& Character.isDigit(vals[0].charAt(1))) {
 					// set result as the given storage element
-					result = r[vals[0].charAt(1)];
+					result = r[Character.getNumericValue(vals[0].charAt(1))];
 				} else {
 					throw new Exception("Location: " + BadIndex + "; "
 							+ vals[0] + " is not a proper storage element");
@@ -116,10 +116,10 @@ public class Calculator {
 				// check for a storage element
 				if (vals[j].charAt(0) == 'r') {
 					// check if its a proper storage element
-					if (Character.isDigit(vals[0].charAt(1))
-							&& vals[0].length() == 2) {
+					if (vals[0].length() == 2
+							&& Character.isDigit(vals[0].charAt(1))) {
 						// set right to be that storage element
-						right = r[vals[0].charAt(1)];
+						right = r[Character.getNumericValue(vals[j].charAt(1))];
 					} else {
 						throw new Exception("Location: " + BadIndex + "; "
 								+ vals[0] + " is not a proper storage element");
