@@ -112,9 +112,14 @@ public class Calculator {
 				pen.println("Program terminated");
 				return; // check this
 			}
+
 			expression = eyes.readLine();
-			output = evaluate(expression);
-			pen.println("Your output is: \n" + output.toString());
+			try {
+				output = evaluate(expression);
+				pen.println("Your output is: \n" + output.toString());
+			} catch (Exception e) {
+				pen.println("ERROR\n" + e.getMessage());
+			}
 		}
 	}
 
