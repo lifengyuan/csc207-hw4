@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public class Calculator {
 	private static int BadIndex = 0;
 	static Fraction ZERO_FRACTION = new Fraction(0);
-
+	
 	// r is an array of 10 fractions, each initialized as Fraction(0)
 	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
@@ -100,7 +100,7 @@ public class Calculator {
 			int j;
 			// we increment by 2, so we are hitting only the terms
 			for (j = 2; j < len; j += 2) {
-				BadIndex += 3;
+				BadIndex += 3; // move past ' [operand] '
 
 				// Check if the operation term is more than 1 character
 				if (vals[j - 1].length() != 1) {
@@ -171,6 +171,15 @@ public class Calculator {
 		}
 	}
 
+	public static Fraction[] evaluate(String[] expressions) throws Exception {
+		int len = expressions.length;
+		Fraction[] results = new Fraction[len];
+		for(int i = 0; i < len; i++) {
+			results[i] = evaluate(expressions[i]);
+		}
+		return results;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		PrintWriter pen = new PrintWriter(System.out, true);
 		InputStreamReader istream = new InputStreamReader(System.in);
