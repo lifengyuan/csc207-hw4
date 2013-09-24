@@ -107,25 +107,35 @@ public class Calculator {
 		}
 	}
 
-	public void main(String[] args) throws Exception {
+	
+	
+	public static void main(String[] args) throws Exception {
 		PrintWriter pen = new PrintWriter(System.out, true);
 		InputStreamReader istream = new InputStreamReader(System.in);
 		BufferedReader eyes = new BufferedReader(istream);
 		String expression = "";
 		Fraction output;
-		while (true) {
-			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
-			if (expression == "quit" || expression == "Quit") {
-				pen.println("Program terminated");
-				return; // check this
-			}
+		boolean loopchecker = true;
 
+		pen.println("Welcome to the magnificent calculator of Matt, Tiff, n Earn!");
+		pen.println("You can enter a mathematical expression using +, -, *, / and ^.");
+		pen.println("You can only use fractions (in the form of \"x/y\" with no spaces) and integers.");
+		pen.println("Expressions are expected to have spaces between numbers/fractions and operands.");
+		pen.println("If you want to store a result, type in \"rn = \" where n = [0-9]\n");
+		while (loopchecker) {
+			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
 			expression = eyes.readLine();
-			try {
-				output = evaluate(expression);
-				pen.println("Your output is: \n" + output.toString());
-			} catch (Exception e) {
-				pen.println("ERROR\n" + e.getMessage());
+			if (expression.compareTo("quit") == 0 || expression.compareTo("Quit") == 0) {
+				pen.println("Program terminated");
+				loopchecker = false; // check this
+			} else {
+				try {
+					output = evaluate(expression);
+					pen.println("Your output is: \n" + output.toString());
+					BadIndex = 0;
+				} catch (Exception e) {
+					pen.println("ERROR\n" + e.getMessage());
+				}
 			}
 		}
 	}
