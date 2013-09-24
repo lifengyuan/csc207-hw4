@@ -18,6 +18,10 @@ public class FractionTest {
 	}
     }
 
+    // The constructor tests use the compareTo method, testing that
+    // the method works properly while testing if the constructors
+    // work.
+
     @Test
     public void testFractionIntInt() throws Exception {
 	assertEquals("Numerator and denominator are small positive numbers", 0,
@@ -202,8 +206,9 @@ public class FractionTest {
     @Test
     public void testToString() throws Exception {
 	assertEquals("basic fraction", "1/6", new Fraction(1, 6).toString());
+	assertEquals("negative fraction", "-5/4",
+		new Fraction(-5, 4).toString());
     }
-    
 
     @Test
     public void testHashCode() throws Exception {
@@ -217,23 +222,41 @@ public class FractionTest {
 		new Fraction("-72/16").hashCode());
     }
 
-
     @Test
     public void testClone() throws Exception {
-	assertEquals("basic fraction", 0, new Fraction(-5, -2).clone()
+	assertEquals("negative fraction", 0, new Fraction(-5, -2).clone()
 		.compareTo(new Fraction(-5, -2)));
+	assertEquals("basic fraction", 0,
+		new Fraction(2, 3).clone().compareTo(new Fraction(2, 3)));
+	assertEquals(
+		"big input",
+		0,
+		new Fraction(Integer.MIN_VALUE, Integer.MAX_VALUE).clone()
+			.compareTo(
+				new Fraction(Integer.MIN_VALUE,
+					Integer.MAX_VALUE)));
     }
 
     @Test
-    public void testEqualsFraction() {
-	assertEquals("basic fraction", true,
+    public void testEqualsFraction() throws Exception {
+	assertEquals("negative fraction", true,
 		new Fraction(-4).equals(new Fraction(-4)));
+	assertEquals("basic fraction", true,
+		new Fraction(7, 5).equals(new Fraction(7, 5)));
+	assertEquals("big input", true, new Fraction(Integer.MIN_VALUE,
+		Integer.MAX_VALUE).equals(new Fraction(Integer.MIN_VALUE,
+		Integer.MAX_VALUE)));
     }
 
     @Test
     public void testAdd() throws Exception {
 	assertEquals("basic fractions", 0, new Fraction(6)
 		.add(new Fraction(-2)).compareTo(new Fraction(4)));
+	assertEquals(
+		"negative fractions",
+		0,
+		new Fraction(-4, 2).add(new Fraction(-1, 2)).compareTo(
+			new Fraction(-5, 2)));
     }
 
     @Test
@@ -243,11 +266,18 @@ public class FractionTest {
 		0,
 		new Fraction(6).subtract(new Fraction(-2)).compareTo(
 			new Fraction(8)));
+	assertEquals(
+		"negative fractions",
+		0,
+		new Fraction(-4, 5).subtract(new Fraction(1, 5)).compareTo(
+			new Fraction(-1)));
     }
 
     @Test
     public void testToDouble() throws Exception {
 	assertEquals("basic fractions", 2.5, new Fraction(5, 2).toDouble(),
+		.001);
+	assertEquals("negative fractions", -4.0, new Fraction(-8, 2).toDouble(),
 		.001);
     }
 
@@ -255,15 +285,22 @@ public class FractionTest {
     public void testToBigDecimal() throws Exception {
 	assertEquals("basic fraction", 0, new Fraction(13, 4).toBigDecimal()
 		.compareTo(new BigDecimal(3.25)));
+	assertEquals("basic fraction", 0, new Fraction(-3, 4).toBigDecimal()
+		.compareTo(new BigDecimal(-.75)));
     }
 
     @Test
-    public void testMultiplyBy() {
+    public void testMultiplyBy() throws Exception {
 	assertEquals(
 		"basic fraction",
 		0,
 		new Fraction(2).multiplyBy(new Fraction(3)).compareTo(
 			new Fraction(6)));
+	assertEquals(
+		"negative fraction",
+		0,
+		new Fraction(-2, 3).multiplyBy(new Fraction(4, 5)).compareTo(
+			new Fraction(-8, 15)));
 	assertEquals("big numbers", -1,
 		new Fraction(Integer.MAX_VALUE).multiplyBy(new Fraction(2))
 			.compareTo(new Fraction(Long.MAX_VALUE)));
@@ -276,6 +313,16 @@ public class FractionTest {
 		0,
 		new Fraction(6).divideBy(new Fraction(3)).compareTo(
 			new Fraction(2)));
+	assertEquals(
+		"negative fraction",
+		0,
+		new Fraction(-4).divideBy(new Fraction(-7)).compareTo(
+			new Fraction(4, 7)));
+	assertEquals(
+		"negative fraction part 2",
+		0,
+		new Fraction(-2, 5).divideBy(new Fraction(-4, 10)).compareTo(
+			new Fraction(1)));
     }
 
     @Test
@@ -306,12 +353,13 @@ public class FractionTest {
     public void testDenominator() throws Exception {
 	assertEquals("basic fraction", BigInteger.valueOf(45), new Fraction(2,
 		45).denominator());
-	assertEquals("negative fraction", BigInteger.valueOf(45), new Fraction(-2,
-		45).denominator());
-	assertEquals("big input", BigInteger.valueOf(Integer.MAX_VALUE), new Fraction(2,
-		Integer.MAX_VALUE).denominator());
-	assertEquals("big negative input", BigInteger.valueOf(-Integer.MIN_VALUE), new Fraction(2,
-		Integer.MIN_VALUE).denominator());
+	assertEquals("negative fraction", BigInteger.valueOf(45), new Fraction(
+		-2, 45).denominator());
+	assertEquals("big input", BigInteger.valueOf(Integer.MAX_VALUE),
+		new Fraction(2, Integer.MAX_VALUE).denominator());
+	assertEquals("big negative input",
+		BigInteger.valueOf(-Integer.MIN_VALUE), new Fraction(2,
+			Integer.MIN_VALUE).denominator());
     }
 
     @Test
