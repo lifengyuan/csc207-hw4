@@ -16,7 +16,7 @@ import java.io.PrintWriter;
  *         https://github.com/wheelere/csc207-hw3/blob/master/
  *         csc207-hw3/src/edu/grinnell/csc207/wheelere/hw3/ Calculator.java
  * 
- *         I sat next to Daniel Goldstein while writing evaluate ~
+ *         I, Earnest Wheeler, sat next to Daniel Goldstein while writing evaluate ~
  * 
  */
 
@@ -29,6 +29,15 @@ public class Calculator {
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
+	/**
+	 * evaluate evaluates a string expression and returns
+	 * the expression, storing it if stated.
+	 * @param expression
+	 * @return
+	 * @throws Exception
+	 */
+	
+	
 	public static Fraction evaluate(String expression) throws Exception {
 		// Create an array of the terms and the operations
 		String[] vals = expression.split(" ");
@@ -191,7 +200,7 @@ public class Calculator {
 		pen.println("You can enter a mathematical expression using +, -, *, / and ^.");
 		pen.println("You can only use fractions (in the form of \"x/y\" with no spaces) and integers.");
 		pen.println("Expressions are expected to have spaces between numbers/fractions and operands.");
-		pen.println("If you want to store a result, type in \"rn = \" where n = [0-9]\n");
+		pen.println("If you want to store a result, type in \"rN = \" where N = [0-9]\n");
 		pen.println("All storage elements are initially set to 0");
 		while (loopchecker) {
 			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
