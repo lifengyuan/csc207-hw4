@@ -160,9 +160,9 @@ public class Calculator {
 			 * Since we are incrementing by 2, we need to check that there isn't
 			 * a stray term or operation at the end of the expression.
 			 */
-			if (len != j) {
+			if (len == j) {
 				throw new Exception("Location: " + (BadIndex + 2) + "; "
-						+ vals[len] + " is not valid syntax");
+						+ vals[len - 1] + " is not valid syntax");
 			}
 			return result;
 		}
@@ -184,7 +184,7 @@ public class Calculator {
 		InputStreamReader istream = new InputStreamReader(System.in);
 		BufferedReader eyes = new BufferedReader(istream);
 		String expression = "";
-		// Fraction output;
+		Fraction output;
 		boolean loopchecker = true;
 
 		pen.println("Welcome to the M.E.T. calculator!");
@@ -202,11 +202,11 @@ public class Calculator {
 				loopchecker = false; // check this
 			} else {
 				try {
-					// output = evaluate(expression);
-					// pen.println("Your output is: \n" + output.toString());
+					output = evaluate(expression);
+					pen.println("Your output is: \n" + output.toString());
 					BadIndex = 0;
 				} catch (Exception e) {
-					pen.println("ERROR\n" + e.getMessage());
+					pen.println("ERROR: " + e.getMessage());
 				}
 			}
 		}

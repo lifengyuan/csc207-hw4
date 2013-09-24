@@ -122,6 +122,12 @@ public class FractionTest {
 		assertEquals("Numerator is positive, denominator is negative", 0,
 				new Fraction(BigInteger.valueOf(-1), BigInteger.valueOf(6))
 						.compareTo(new Fraction("1/-6")));
+		assertEquals("Numerator is positive, no denominator", 0,
+				new Fraction(BigInteger.valueOf(8), BigInteger.valueOf(1))
+						.compareTo(new Fraction("8")));
+		assertEquals("Numerator is negative, no denominator", 0,
+				new Fraction(BigInteger.valueOf(-8), BigInteger.valueOf(1))
+						.compareTo(new Fraction("-8")));
 	}
 
 	@Test

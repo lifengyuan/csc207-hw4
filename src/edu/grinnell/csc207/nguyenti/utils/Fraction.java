@@ -84,7 +84,7 @@ public class Fraction {
 	String[] parts = fract.split("/");
 	if (parts.length > 2) {
 	    throw new Exception("Too many values");
-	} else if ((Long.parseLong(parts[1]) == 0) && (parts.length != 1)) {
+	} else if ((parts.length != 1) && (Long.parseLong(parts[1]) == 0)) {
 	    throw new Exception("Zero is an invalid denominator");
 	}
 	try {
