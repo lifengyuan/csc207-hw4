@@ -296,7 +296,7 @@ public class Fraction {
 	} else {
 	    BigInteger resultNumerator;
 	    BigInteger resultDenominator;
-	    int sign = this.compareTo(new Fraction(0));
+	    int sign = Integer.compare(exponent, 0);
 	    int power = Math.abs(exponent);
 
 	    resultNumerator = this.numerator.pow(power);

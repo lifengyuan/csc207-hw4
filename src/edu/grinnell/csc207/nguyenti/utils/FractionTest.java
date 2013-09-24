@@ -282,24 +282,44 @@ public class FractionTest {
     public void testPow() throws Exception {
 	assertEquals("basic fraction", 0,
 		new Fraction(4).pow(2).compareTo(new Fraction(16)));
+	assertEquals("negative fraction", 0,
+		new Fraction(-4).pow(2).compareTo(new Fraction(16)));
+	assertEquals("negative exponent, positive base", 0,
+		new Fraction(4).pow(-2).compareTo(new Fraction(1, 16)));
+	assertEquals("negative exponent, negative base", 0,
+		new Fraction(-4).pow(-2).compareTo(new Fraction(1, 16)));
+	assertEquals("big input", 0,
+		new Fraction(1000).pow(2).compareTo(new Fraction(BigInteger.valueOf(1000000))));
+	
     }
 
     @Test
     public void testReciprocal() throws Exception {
 	assertEquals("basic fraction", 0, new Fraction(5, 4).reciprocal()
 		.compareTo(new Fraction(4, 5)));
+	assertEquals("negative fraction", 0, new Fraction(-5, 4).reciprocal()
+		.compareTo(new Fraction(-4, 5)));
+	assertEquals("big input", 0, new Fraction(Integer.MAX_VALUE, 5).reciprocal()
+		.compareTo(new Fraction(5, Integer.MAX_VALUE)));
     }
 
     @Test
     public void testNegate() throws Exception {
 	assertEquals("basic fraction", 0,
 		new Fraction(5).negate().compareTo(new Fraction(-5)));
+	assertEquals("negative fraction", 0,
+		new Fraction(-5).negate().compareTo(new Fraction(5)));
+	assertEquals("big input", 0,
+		new Fraction(Integer.MAX_VALUE).negate().compareTo(new Fraction(Integer.MIN_VALUE+1)));
     }
 
     @Test
     public void testNumerator() throws Exception {
 	assertEquals("basic fraction", BigInteger.valueOf(2), new Fraction(2,
 		15).numerator());
+	assertEquals("negative fraction", BigInteger.valueOf(-2), new Fraction(-2,
+		45).numerator());
+	assertEquals("big input", BigInteger.valueOf(Integer.MAX_VALUE), new Fraction(Integer.MAX_VALUE, 2).numerator());
     }
 
     @Test
@@ -310,8 +330,6 @@ public class FractionTest {
 		45).denominator());
 	assertEquals("big input", BigInteger.valueOf(Integer.MAX_VALUE), new Fraction(2,
 		Integer.MAX_VALUE).denominator());
-	assertEquals("big negative input", BigInteger.valueOf(-Integer.MIN_VALUE), new Fraction(2,
-		Integer.MIN_VALUE).denominator());
     }
 
     @Test
