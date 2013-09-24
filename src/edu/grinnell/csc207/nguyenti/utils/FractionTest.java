@@ -253,7 +253,9 @@ public class FractionTest {
 				0,
 				new Fraction(2).multiplyBy(new Fraction(3)).compareTo(
 						new Fraction(6)));
-		assertEquals()
+		assertEquals("big numbers", -1,
+				new Fraction(Integer.MAX_VALUE).multiplyBy(new Fraction(2))
+						.compareTo(new Fraction(Long.MAX_VALUE)));
 	}
 
 	@Test
