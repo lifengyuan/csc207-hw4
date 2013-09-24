@@ -80,7 +80,6 @@ public class Fraction {
 		this.denominator = BigInteger.valueOf(1);
 	} // Fraction(int)
 
-	// throw exception if input is not a fraction
 	public Fraction(String fract) throws Exception {
 		String[] parts = fract.split("/");
 		if (parts.length > 2) {
@@ -88,12 +87,15 @@ public class Fraction {
 		} else if ((Long.parseLong(parts[1]) == 0) && (parts.length != 1)) {
 			throw new Exception("Zero is an invalid denominator");
 		}
-
-		this.numerator = BigInteger.valueOf(Long.parseLong(parts[0]));
-		if (parts.length == 1) {
-			this.denominator = BigInteger.valueOf(1);
-		} else {
-			this.denominator = BigInteger.valueOf(Long.parseLong(parts[1]));
+		try {
+			this.numerator = BigInteger.valueOf(Long.parseLong(parts[0]));
+			if (parts.length == 1) {
+				this.denominator = BigInteger.valueOf(1);
+			} else {
+				this.denominator = BigInteger.valueOf(Long.parseLong(parts[1]));
+			}
+		} catch (Exception e) {
+			throw new Exception("Problem with " + fract + ": not a fraction");
 		}
 		this.cleanup();
 	} // Fraction(String)
@@ -155,13 +157,12 @@ public class Fraction {
 	}
 
 	public boolean equals(Fraction other) {
-		return (this.numerator.equals(other.numerator)) &&
-				(this.denominator.equals(other.denominator));
+		return (this.numerator.equals(other.numerator))
+				&& (this.denominator.equals(other.denominator));
 	}
-	
+
 	public boolean equals(Object other) {
-		return (other instanceof Fraction) &&
-				(this.equals((Fraction) other));
+		return (other instanceof Fraction) && (this.equals((Fraction) other));
 	}
 
 	// +-----------------+----------------------------------------------
@@ -282,9 +283,9 @@ public class Fraction {
 	}
 
 	/**
-	 * Find the fraction to the power of an integer
-	 * -A fraction to a negative power is its reciprocal
-	 * 	 to the absolute value of the power
+	 * Find the fraction to the power of an integer -A fraction to a negative
+	 * power is its reciprocal to the absolute value of the power
+	 * 
 	 * @param exponent
 	 * @return
 	 */
@@ -297,7 +298,7 @@ public class Fraction {
 
 		resultNumerator = this.numerator.pow(power);
 		resultDenominator = this.denominator.pow(power);
-		
+
 		Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
 		resultFrac.simplify();
 		if (sign >= 0) {
