@@ -1,5 +1,8 @@
 package edu.grinnell.csc207.nguyenti.utils;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 
 /**
@@ -88,4 +91,23 @@ public class Calculator {
 			return result;
 		}
 	}
+
+	public void main(String[] args) throws Exception {
+		PrintWriter pen = new PrintWriter(System.out, true);
+		InputStreamReader istream = new InputStreamReader(System.in);
+		BufferedReader eyes = new BufferedReader(istream);
+		String expression = "";
+		Fraction output;
+		while (true) {
+			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
+			if (expression == "quit" || expression == "Quit") {
+				pen.println("Program terminated");
+				return; // check this
+			}
+			expression = eyes.readLine();
+			output = evaluate(expression);
+			pen.println("Your output is: \n" + output.toString());
+		}
+	}
+
 }
