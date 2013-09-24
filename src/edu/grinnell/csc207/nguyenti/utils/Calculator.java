@@ -24,68 +24,109 @@ import java.math.BigInteger;
 public class Calculator {
 	private static int BadIndex = 0;
 	static Fraction ZERO_FRACTION = new Fraction(0);
-	
+
 	// r is an array of 10 fractions, each initialized as Fraction(0)
 	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
 	public static Fraction evaluate(String expression) throws Exception {
+		// Create an array of the terms and the operations
 		String[] vals = expression.split(" ");
-		String revised = ""; //
-		int len = vals.length;
-		char c = vals[0].charAt(0);
-		Fraction right;
-		Fraction result;
+		String revised = ""; // An empty string
+		int len = vals.length; // the number of terms + operations
+		if (len == 0) {
+			throw new Exception("Location: " + BadIndex + "Nothing to compute");
+		}
+		Fraction result; // the left side of the equation and the final result
+		Fraction right; // the right term that the operation is applying
+		char c = vals[0].charAt(0); // the first character of expression
+		// Check if the first character isnt a number or r:
 		if (!Character.isDigit(c) && c != 'r') {
 			throw new Exception("Location: " + BadIndex + "; " + vals[0]
 					+ " is not a digit or a storage element");
-		} else if (vals[1] == "=") {
+		} else if (len > 1 && vals[1] == "=") {
+			// if the first operation is '=', we should be assigning rN a value
 			if (c != 'r') {
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a storage element");
 			} else if (vals[0].length() != 2
 					&& !Character.isDigit(vals[0].charAt(1))) {
+				// if we have rNN, or r[non-digit], throw this exception
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a proper storage element");
 			} else {
+
+				// if everything checks out, make revised everything after '='
 				for (int i = 2; i < len; i++) {
 					revised = revised + vals[i] + " ";
 				}
-				
-				BadIndex += 5;
+				BadIndex += 5; // set the index to be after 'rN = '
+				// recurse with revised, and set rN to be evaluate(revised)
 				r[vals[0].charAt(1)] = evaluate(revised);
 				return r[vals[0].charAt(1)];
 			}
 		} else {
-			if (vals[0].charAt(0) == 'r') {
+			/**
+			 * If there isn't an equals as the first operation, there should
+			 * never be one and we can move on to calculating everything.
+			 */
+
+			// Check for the first term being rN
+			if (c == 'r') {
+				// ensure it's a valid storage element
 				if (Character.isDigit(vals[0].charAt(1))
 						&& vals[0].length() == 2) {
+					// set result as the given storage element
 					result = r[vals[0].charAt(1)];
 				} else {
 					throw new Exception("Location: " + BadIndex + "; "
 							+ vals[0] + " is not a proper storage element");
 				}
+			} else {
+				// otherwise set result to be Fraction(String) of the first term
+				try {
+					result = new Fraction(vals[0]);
+				} catch (Exception e) {
+					// throw exception if it's not a valid string
+					throw new Exception("Location: " + BadIndex + "; "
+							+ vals[0] + " is not a fraction");
+				}
 			}
-			result = new Fraction(vals[0]);
+
 			BadIndex = BadIndex + (vals[0].length());
 			int j;
+			// we increment by 2, so we are hitting only the terms
 			for (j = 2; j < len; j += 2) {
 				BadIndex += 3;
+
+				// Check if the operation term is more than 1 character
 				if (vals[j - 1].length() != 1) {
 					throw new Exception("Location: " + (BadIndex - 2) + "; "
 							+ vals[j - 1] + " is not a valid operation");
 				}
+				// check for a storage element
 				if (vals[j].charAt(0) == 'r') {
+					// check if its a proper storage element
 					if (Character.isDigit(vals[0].charAt(1))
 							&& vals[0].length() == 2) {
-						result = r[vals[0].charAt(1)];
+						// set right to be that storage element
+						right = r[vals[0].charAt(1)];
 					} else {
 						throw new Exception("Location: " + BadIndex + "; "
 								+ vals[0] + " is not a proper storage element");
 					}
+				} else {
+					// set right to be Fraction(String) of the next term
+					try {
+						right = new Fraction(vals[j]);
+					} catch (Exception e) {
+						// if its not a string of a fraction throw an exception
+						throw new Exception("Location: " + BadIndex + "; "
+								+ vals[j] + " is not a fraction");
+					}
 				}
-				right = new Fraction(vals[j]);
+				// We know vals[j -1] should be an operation, and is 1 char long
 				switch (vals[j - 1].charAt(0)) {
 				case '+':
 					result = result.add(right);
@@ -100,6 +141,7 @@ public class Calculator {
 					result = result.divideBy(right);
 					break;
 				case '^':
+					// We can only take integer exponents
 					if (right.wholePart() == right.numerator()) {
 						result = result.pow(Integer.parseInt(vals[j]));
 					} else {
@@ -108,21 +150,26 @@ public class Calculator {
 					}
 					break;
 				default:
+					// If we don't have one of these operations, we reject it
 					throw new Exception("Location: " + (BadIndex - 2) + "; "
-							+ vals[j] + " is not a valid Fraction");
+							+ vals[j - 1] + " is not a valid operation");
 				}
 				BadIndex += vals[j].length();
 			} // for loop calculates everything and condenses it into result
+
+			/**
+			 * Since we are incrementing by 2, we need to check that there isn't
+			 * a stray term or operation at the end of the expression.
+			 */
 			if (len != j) {
 				throw new Exception("Location: " + (BadIndex + 2) + "; "
-						+ vals[len] + " is not a valid term");
+						+ vals[len] + " is not valid syntax");
 			}
+
 			return result;
 		}
 	}
 
-	
-	
 	public static void main(String[] args) throws Exception {
 		PrintWriter pen = new PrintWriter(System.out, true);
 		InputStreamReader istream = new InputStreamReader(System.in);
@@ -139,7 +186,8 @@ public class Calculator {
 		while (loopchecker) {
 			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
 			expression = eyes.readLine();
-			if (expression.compareTo("quit") == 0 || expression.compareTo("Quit") == 0) {
+			if (expression.compareTo("quit") == 0
+					|| expression.compareTo("Quit") == 0) {
 				pen.println("Program terminated");
 				loopchecker = false; // check this
 			} else {
