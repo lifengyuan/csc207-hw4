@@ -23,14 +23,14 @@ import java.math.BigInteger;
 
 public class Calculator {
 	private static int BadIndex = 0;
-	Fraction ZERO_FRACTION = new Fraction(0);
+	static Fraction ZERO_FRACTION = new Fraction(0);
 	
 	// r is an array of 10 fractions, each initialized as Fraction(0)
-	Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
+	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
-	public Fraction evaluate(String expression) throws Exception {
+	public static Fraction evaluate(String expression) throws Exception {
 		String[] vals = expression.split(" ");
 		String revised = ""; //
 		int len = vals.length;
