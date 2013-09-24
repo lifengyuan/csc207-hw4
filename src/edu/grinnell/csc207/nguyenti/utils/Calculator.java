@@ -23,27 +23,25 @@ import java.io.PrintWriter;
 public class Calculator {
 	private static int BadIndex = 0;
 	static Fraction ZERO_FRACTION = new Fraction(0);
-	
+
 	// r is an array of 10 fractions, each initialized as Fraction(0)
 	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
-	// HAVENT DEALT WITH "r0 =" case
-	// If we want make error index work properly, we need to have a set count
-	// that will survive recursion
 	public static Fraction evaluate(String expression) throws Exception {
 		// Create an array of the terms and the operations
 		String[] vals = expression.split(" ");
 		String revised = ""; // An empty string
 		int len = vals.length; // the number of terms + operations
 		if (len == 0) {
-			throw new Exception("Location: " + BadIndex + "Nothing to compute");
+			throw new Exception("Location: " + BadIndex
+					+ "; Nothing to compute");
 		}
 		Fraction result; // the left side of the equation and the final result
 		Fraction right; // the right term that the operation is applying
 		char c = vals[0].charAt(0); // the first character of expression
-		// Check if the first character isnt a number or r:
+		// Check if the first character isn't a number or r:
 		if (!Character.isDigit(c) && c != 'r') {
 			throw new Exception("Location: " + BadIndex + "; " + vals[0]
 					+ " is not a digit or a storage element");
@@ -58,7 +56,6 @@ public class Calculator {
 				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a proper storage element");
 			} else {
-
 				// if everything checks out, make revised everything after '='
 				for (int i = 2; i < len; i++) {
 					revised = revised + vals[i] + " ";
@@ -71,9 +68,8 @@ public class Calculator {
 		} else {
 			/**
 			 * If there isn't an equals as the first operation, there should
-			 * never be one and we can move on to calculating everything.
+			 * never be one, and we can move on to calculating everything.
 			 */
-
 			// Check for the first term being rN
 			if (c == 'r') {
 				// ensure it's a valid storage element
@@ -98,6 +94,7 @@ public class Calculator {
 
 			BadIndex = BadIndex + (vals[0].length());
 			int j;
+
 			// we increment by 2, so we are hitting only the terms
 			for (j = 2; j < len; j += 2) {
 				BadIndex += 3; // move past ' [operand] '
@@ -172,14 +169,16 @@ public class Calculator {
 	}
 
 	public static Fraction[] evaluate(String[] expressions) throws Exception {
-		int len = expressions.length;
+		int len = expressions.length; // number of expressions
+		// make a corresponding array of Fractions
 		Fraction[] results = new Fraction[len];
-		for(int i = 0; i < len; i++) {
+
+		for (int i = 0; i < len; i++) {
 			results[i] = evaluate(expressions[i]);
-		}
+		} // for loop evaluates each expressions to results[]
 		return results;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		PrintWriter pen = new PrintWriter(System.out, true);
 		InputStreamReader istream = new InputStreamReader(System.in);
