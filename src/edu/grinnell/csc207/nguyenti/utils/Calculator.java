@@ -203,7 +203,7 @@ public class Calculator {
 			} else {
 				try {
 					output = evaluate(expression);
-					pen.println("Your output is: \n" + output.toString());
+					pen.println(output.toString());
 					BadIndex = 0;
 				} catch (Exception e) {
 					pen.println("ERROR: " + e.getMessage());
