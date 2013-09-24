@@ -358,13 +358,8 @@ public class Fraction {
 
 	public BigInteger wholePart() {
 		BigInteger resultNum = this.numerator.subtract(this.numerator
-				.remainder(this.denominator));
+				.remainder(this.denominator)).divide(this.denominator);
 		return resultNum;
-	}
-
-	public BigInteger gcd(Fraction other) {
-		BigInteger gcd = this.denominator.gcd(other.denominator);
-		return gcd;
 	}
 
 	public static void main(String[] args) {
