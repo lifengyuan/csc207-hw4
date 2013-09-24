@@ -39,14 +39,15 @@ public class Calculator {
 		Fraction right;
 		Fraction result;
 		if (!Character.isDigit(c) && c != 'r') {
-			throw new Exception(vals[0]
+			throw new Exception("Location: " + BadIndex + "; " + vals[0]
 					+ " is not a digit or a storage element");
 		} else if (vals[1] == "=") {
 			if (c != 'r') {
-				throw new Exception(vals[0] + " is not a storage element");
+				throw new Exception("Location: " + BadIndex + "; " + vals[0]
+						+ " is not a storage element");
 			} else if (vals[0].length() > 2
 					&& !Character.isDigit(vals[0].charAt(1))) {
-				throw new Exception(vals[0]
+				throw new Exception("Location: " + BadIndex + "; " + vals[0]
 						+ " is not a proper storage element");
 			} else {
 				for (int i = 2; i < len; i++) {
@@ -57,9 +58,15 @@ public class Calculator {
 				return r[vals[0].charAt(1)];
 			}
 		} else {
-			if (vals[0].charAt(0) == 'r'
-					&& Character.isDigit(vals[0].charAt(1))) {
-				result = r[vals[0].charAt(1)];
+			if (vals[0].charAt(0) == 'r') {
+				if (Character.isDigit(vals[0].charAt(1))
+						&& vals[0].length() == 2) {
+					result = r[vals[0].charAt(1)];
+				} else {
+					throw new Exception("Location: " + BadIndex + "; "
+							+ vals[0] + " is not a proper storage element");
+				}
+
 			}
 			result = new Fraction(vals[0]);
 			for (int j = 2; j < len; j += 2) {
