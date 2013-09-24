@@ -151,7 +151,7 @@ public class Calculator {
 					break;
 				case '^':
 					// We can only take integer exponents
-					if (right.denominator() == BigInteger.valueOf(1)) {
+					if (right.denominator().equals(BigInteger.valueOf(1))) {
 						result = result.pow(Integer.parseInt(vals[j]));
 					} else {
 						throw new Exception("Location: " + BadIndex + "; "

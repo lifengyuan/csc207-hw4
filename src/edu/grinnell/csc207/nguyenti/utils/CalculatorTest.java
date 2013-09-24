@@ -15,7 +15,10 @@ public class CalculatorTest {
 		assertEquals("divide", 0, Calculator.evaluate("1 / 2").compareTo(new Fraction(1, 2)));
 		assertEquals("subtract", 0, Calculator.evaluate("1 - 1/2").compareTo(new Fraction(1, 2)));
 		assertEquals("add", 0, Calculator.evaluate("1 + 2").compareTo(new Fraction(3)));
-		assertEquals("multiple storage", 0, Calculator.evaluate("r0 = r1 = 1 + 1").compareTo(Calculator.r[0]));
+		assertEquals("multiple storage r0", 0, Calculator.evaluate("r0 = r1 = 1 + 1").compareTo(Calculator.r[0]));
+		assertEquals("multiple storage r1", 0, Calculator.evaluate("r0 = r1 = 1 + 1").compareTo(Calculator.r[1]));
+		assertEquals("pow", 0, Calculator.evaluate("2 ^ 4").compareTo(new Fraction(16)));
+		assertEquals("pow fractions", 0, Calculator.evaluate("1/2 ^ 4").compareTo(new Fraction(1, 16)));
 	}
 
 }
