@@ -21,7 +21,7 @@ import java.math.BigInteger;
  */
 
 public class Calculator {
-
+	private static int BadIndex = 0;
 	Fraction ZERO_FRACTION = new Fraction(0);
 	// r is an array of 10 fractions, each initialized as Fraction(0)
 	Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
@@ -52,15 +52,23 @@ public class Calculator {
 				for (int i = 2; i < len; i++) {
 					revised = revised + vals[i] + " "; // Worth checking
 				}
+				BadIndex += 2;
 				r[vals[0].charAt(1)] = evaluate(revised);
 				return r[vals[0].charAt(1)];
 			}
 		} else {
+			if (vals[0].charAt(0) == 'r'
+					&& Character.isDigit(vals[0].charAt(1))) {
+				result = r[vals[0].charAt(1)];
+			}
 			result = new Fraction(vals[0]);
 			for (int j = 2; j < len; j += 2) {
 
 				if (vals[j - 1].length() != 1) {
 					throw new Exception(vals[j] + " is not a valid operation");
+				}
+				if (vals[j].charAt(0) == 'r') {
+
 				}
 				right = new Fraction(vals[j]);
 				switch (vals[j - 1].charAt(0)) {
