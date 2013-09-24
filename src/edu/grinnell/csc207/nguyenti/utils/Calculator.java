@@ -3,6 +3,7 @@ package edu.grinnell.csc207.nguyenti.utils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 
 /**
  * Calculator implementation
@@ -150,7 +151,7 @@ public class Calculator {
 					break;
 				case '^':
 					// We can only take integer exponents
-					if (right.wholePart() == right.numerator()) {
+					if (right.denominator() == BigInteger.valueOf(1)) {
 						result = result.pow(Integer.parseInt(vals[j]));
 					} else {
 						throw new Exception("Location: " + BadIndex + "; "
