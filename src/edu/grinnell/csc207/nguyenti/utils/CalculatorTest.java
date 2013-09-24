@@ -46,35 +46,30 @@ public class CalculatorTest {
 	    Calculator.evaluate("2*3");
 	    fail("Forgotten spaces between operand and number");
 	} catch (Exception e) {
-
 	}
 	// test for failure if expression does not make sense
 	try {
 	    Calculator.evaluate("2 + 3 +");
 	    fail("Test is not proper syntax");
 	} catch (Exception e) {
-
 	}
 	// test for failure if storing expression is not correct
 	try {
 	    Calculator.evaluate("r0 =");
 	    fail("Incorrect usage of storage");
 	} catch (Exception e) {
-
 	}
 	// test for failure if equal expression is not correct
 	try {
 	    Calculator.evaluate("r3= 43 - 1");
 	    fail("improper spaces for storage");
 	} catch (Exception e) {
-
 	}
 	// test for failure if not a storage element
 	try {
 	    Calculator.evaluate("r10 = 145");
 	    fail("Not a proper storage element");
 	} catch (Exception e) {
-
 	}
 
     }
