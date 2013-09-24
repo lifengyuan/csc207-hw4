@@ -3,7 +3,6 @@ package edu.grinnell.csc207.nguyenti.utils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.math.BigInteger;
 
 /**
  * Calculator implementation
@@ -24,10 +23,7 @@ import java.math.BigInteger;
 public class Calculator {
 	private static int BadIndex = 0;
 	static Fraction ZERO_FRACTION = new Fraction(0);
-<<<<<<< HEAD
 
-=======
->>>>>>> 60f2fea1f577bdc155ea957cb3ab854512dec736
 	// r is an array of 10 fractions, each initialized as Fraction(0)
 	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
@@ -171,7 +167,6 @@ public class Calculator {
 				throw new Exception("Location: " + (BadIndex + 2) + "; "
 						+ vals[len] + " is not valid syntax");
 			}
-
 			return result;
 		}
 	}
@@ -181,7 +176,7 @@ public class Calculator {
 		InputStreamReader istream = new InputStreamReader(System.in);
 		BufferedReader eyes = new BufferedReader(istream);
 		String expression = "";
-		//Fraction output;
+		// Fraction output;
 		boolean loopchecker = true;
 
 		pen.println("Welcome to the M.E.T. calculator!");
@@ -199,8 +194,8 @@ public class Calculator {
 				loopchecker = false; // check this
 			} else {
 				try {
-					//output = evaluate(expression);
-					//pen.println("Your output is: \n" + output.toString());
+					// output = evaluate(expression);
+					// pen.println("Your output is: \n" + output.toString());
 					BadIndex = 0;
 				} catch (Exception e) {
 					pen.println("ERROR\n" + e.getMessage());
