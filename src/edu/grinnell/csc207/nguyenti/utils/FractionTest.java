@@ -2,6 +2,7 @@ package edu.grinnell.csc207.nguyenti.utils;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Test;
@@ -197,99 +198,106 @@ public class FractionTest {
 
 	@Test
 	public void testToString() throws Exception {
-		assertEquals("basic Fraction", 0, new Fraction(BigInteger.valueOf(-5),
-				BigInteger.valueOf(2)).compareTo(new Fraction(-2.5)));
+		assertEquals("basic fraction", "1/6", new Fraction(1, 6).toString());
 	}
 
 	@Test
-	public void testClone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCompareTo() {
-		fail("Not yet implemented");
+	public void testClone() throws Exception {
+		assertEquals("basic fraction", 0, new Fraction(-5, -2).clone()
+				.compareTo(new Fraction(-5, -2)));
 	}
 
 	@Test
 	public void testEqualsFraction() {
-		fail("Not yet implemented");
+		assertEquals("basic fraction", true,
+				new Fraction(-4).equals(new Fraction(-4)));
 	}
 
 	@Test
-	public void testAdd() {
-		fail("Not yet implemented");
+	public void testAdd() throws Exception {
+		assertEquals("basic fractions", 0, new Fraction(6)
+				.add(new Fraction(-2)).compareTo(new Fraction(4)));
 	}
 
 	@Test
-	public void testSubtract() {
-		fail("Not yet implemented");
+	public void testSubtract() throws Exception {
+		assertEquals(
+				"basic fractions",
+				0,
+				new Fraction(6).subtract(new Fraction(-2)).compareTo(
+						new Fraction(8)));
 	}
 
 	@Test
-	public void testToDouble() {
-		fail("Not yet implemented");
+	public void testToDouble() throws Exception {
+		assertEquals("basic fractions", 2.5, new Fraction(5, 2).toDouble(),
+				.001);
 	}
 
 	@Test
-	public void testToBigDecimal() {
-		fail("Not yet implemented");
+	public void testToBigDecimal() throws Exception {
+		assertEquals("basic fraction", 0, new Fraction(13, 4).toBigDecimal()
+				.compareTo(new BigDecimal(3.25)));
 	}
 
 	@Test
 	public void testMultiplyBy() {
-		fail("Not yet implemented");
+		assertEquals(
+				"basic fraction",
+				0,
+				new Fraction(2).multiplyBy(new Fraction(3)).compareTo(
+						new Fraction(6)));
 	}
 
 	@Test
-	public void testDivideBy() {
-		fail("Not yet implemented");
+	public void testDivideBy() throws Exception {
+		assertEquals(
+				"basic fraction",
+				0,
+				new Fraction(6).divideBy(new Fraction(3)).compareTo(
+						new Fraction(2)));
 	}
 
 	@Test
-	public void testPow() {
-		fail("Not yet implemented");
+	public void testPow() throws Exception {
+		assertEquals("basic fraction", 0,
+				new Fraction(4).pow(2).compareTo(new Fraction(16)));
 	}
 
 	@Test
-	public void testReciprocal() {
-		fail("Not yet implemented");
+	public void testReciprocal() throws Exception {
+		assertEquals("basic fraction", 0, new Fraction(5, 4).reciprocal()
+				.compareTo(new Fraction(4, 5)));
 	}
 
 	@Test
-	public void testNegate() {
-		fail("Not yet implemented");
+	public void testNegate() throws Exception {
+		assertEquals("basic fraction", 0,
+				new Fraction(5).negate().compareTo(new Fraction(-5)));
 	}
 
 	@Test
-	public void testNumerator() {
-		fail("Not yet implemented");
+	public void testNumerator() throws Exception {
+		assertEquals("basic fraction", BigInteger.valueOf(2), new Fraction(2, 15).numerator());
 	}
 
 	@Test
-	public void testDenominator() {
-		fail("Not yet implemented");
+	public void testDenominator() throws Exception {
+		assertEquals("basic fraction", BigInteger.valueOf(45), new Fraction(2, 45).denominator());
 	}
 
 	@Test
-	public void testFractionalPart() {
-		fail("Not yet implemented");
+	public void testFractionalPart() throws Exception {
+		assertEquals("basic fraction", 0, new Fraction(7, 2).fractionalPart()
+				.compareTo(new Fraction(1, 2)));
 	}
 
 	@Test
-	public void testWholePart() {
-		fail("Not yet implemented");
+	public void testWholePart() throws Exception {
+		assertEquals("basic fraction", BigInteger.valueOf(3),
+				new Fraction(7, 2).wholePart());
 	}
 
-	@Test
-	public void testGcd() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
-	}
 	//
 	// @Test
 	// public void testConstruction() throws Exception {

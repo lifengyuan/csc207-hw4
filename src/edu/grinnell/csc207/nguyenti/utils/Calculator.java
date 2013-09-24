@@ -22,16 +22,16 @@ import java.math.BigInteger;
 
 public class Calculator {
 	private static int BadIndex = 0;
-	Fraction ZERO_FRACTION = new Fraction(0);
+	static Fraction ZERO_FRACTION = new Fraction(0);
 	// r is an array of 10 fractions, each initialized as Fraction(0)
-	Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
+	static Fraction[] r = { ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION,
 			ZERO_FRACTION, ZERO_FRACTION, ZERO_FRACTION };
 
 	// HAVENT DEALT WITH "r0 =" case
 	// If we want make error index work properly, we need to have a set count
 	// that will survive recursion
-	public Fraction evaluate(String expression) throws Exception {
+	public static Fraction evaluate(String expression) throws Exception {
 		String[] vals = expression.split(" ");
 		String revised = "";
 		int len = vals.length;
@@ -114,14 +114,15 @@ public class Calculator {
 		InputStreamReader istream = new InputStreamReader(System.in);
 		BufferedReader eyes = new BufferedReader(istream);
 		String expression = "";
-		Fraction output;
+		//Fraction output;
 		boolean loopchecker = true;
 
-		pen.println("Welcome to the magnificent calculator of Matt, Tiff, n Earn!");
+		pen.println("Welcome to the M.E.T. calculator!");
 		pen.println("You can enter a mathematical expression using +, -, *, / and ^.");
 		pen.println("You can only use fractions (in the form of \"x/y\" with no spaces) and integers.");
 		pen.println("Expressions are expected to have spaces between numbers/fractions and operands.");
 		pen.println("If you want to store a result, type in \"rn = \" where n = [0-9]\n");
+		pen.println("All storage elements are initially set to 0");
 		while (loopchecker) {
 			pen.println("Enter an expression or \"Quit\" to exit the calculator: ");
 			expression = eyes.readLine();
@@ -130,8 +131,8 @@ public class Calculator {
 				loopchecker = false; // check this
 			} else {
 				try {
-					output = evaluate(expression);
-					pen.println("Your output is: \n" + output.toString());
+					//output = evaluate(expression);
+					//pen.println("Your output is: \n" + output.toString());
 					BadIndex = 0;
 				} catch (Exception e) {
 					pen.println("ERROR\n" + e.getMessage());
