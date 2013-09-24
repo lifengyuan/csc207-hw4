@@ -201,6 +201,8 @@ public class FractionTest {
 	assertEquals("Negative non-integer double", 0,
 		new Fraction(BigInteger.valueOf(-5), BigInteger.valueOf(2))
 			.compareTo(new Fraction(-2.5)));
+	assertEquals("longer double", 0, new Fraction(BigInteger.valueOf((long) 5.5737296))
+			.compareTo(new Fraction(55737296/10000000)));
     }
 
     @Test
