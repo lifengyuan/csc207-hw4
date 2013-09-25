@@ -210,7 +210,7 @@ public class Calculator {
 	    if (expression.compareTo("quit") == 0
 		    || expression.compareTo("Quit") == 0) {
 		pen.println("Program terminated");
-		loopchecker = false; // check this
+		loopchecker = false;
 	    } else {
 		try {
 		    output = evaluate(expression);
